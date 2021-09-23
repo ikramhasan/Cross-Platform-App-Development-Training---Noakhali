@@ -41,13 +41,27 @@ class _HomePageState extends State<HomePage> {
           style: const TextStyle(fontSize: 40),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            number = number + 1;
-          });
-        },
+      floatingActionButton: Stack(
+        //mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            child: const Icon(Icons.add),
+            onPressed: () {
+              setState(() {
+                number = number + 1;
+              });
+            },
+          ),
+          SizedBox(width: 16),
+          FloatingActionButton(
+            child: const Icon(Icons.remove),
+            onPressed: () {
+              setState(() {
+                number = number - 1;
+              });
+            },
+          ),
+        ],
       ),
     );
   }
