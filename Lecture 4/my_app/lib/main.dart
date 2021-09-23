@@ -15,15 +15,37 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("My App"),
+          title: Text("ID Card"),
+          centerTitle: true,
         ),
         body: Center(
-          child: Text(
-            "Ikram",
-            style: TextStyle(
-              fontSize: 40,
-              color: Colors.blue,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network(
+                "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61",
+                height: 300,
+                width: 300,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(height: 16),
+              const Text(
+                "Ikramul Hasan",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16),
+              Text("Application Developer"),
+              TextButton(
+                child: Text("ikramhasan.dev@gmail.com"),
+                onPressed: () {
+                  print("Button pressed");
+                },
+              ),
+            ],
           ),
         ),
       ),
