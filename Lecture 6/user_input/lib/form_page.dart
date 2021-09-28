@@ -12,7 +12,7 @@ class _FormPageState extends State<FormPage> {
 
   TextEditingController secondNumberController = TextEditingController();
 
-  int sum = 0;
+  num sum = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +64,17 @@ class _FormPageState extends State<FormPage> {
                   });
                 },
                 child: Text("Add"),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  int num1 = int.parse(firstNumberController.text);
+                  int num2 = int.parse(secondNumberController.text);
+                  setState(() {
+                    sum = num1 / num2;
+                  });
+                },
+                child: Text("Divide"),
               ),
             ],
           ),
