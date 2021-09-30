@@ -9,7 +9,6 @@ class FormPage extends StatefulWidget {
 
 class _FormPageState extends State<FormPage> {
   TextEditingController firstNumberController = TextEditingController();
-
   TextEditingController secondNumberController = TextEditingController();
 
   num sum = 0;
@@ -17,6 +16,7 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('User Input'),
       ),
@@ -32,6 +32,8 @@ class _FormPageState extends State<FormPage> {
               ),
               TextFormField(
                 controller: firstNumberController,
+                keyboardType: TextInputType.number,
+                obscureText: true,
                 decoration: InputDecoration(
                   labelText: "Enter a number",
                   hintText: "eg. 23",
@@ -48,6 +50,7 @@ class _FormPageState extends State<FormPage> {
               SizedBox(height: 16),
               TextField(
                 controller: secondNumberController,
+                maxLines: 5,
                 decoration: InputDecoration(
                   labelText: "Enter another number",
                   hintText: "eg. 30",
@@ -75,6 +78,14 @@ class _FormPageState extends State<FormPage> {
                   });
                 },
                 child: Text("Divide"),
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  firstNumberController.clear();
+                  secondNumberController.clear();
+                },
+                child: Text("Clear"),
               ),
             ],
           ),
