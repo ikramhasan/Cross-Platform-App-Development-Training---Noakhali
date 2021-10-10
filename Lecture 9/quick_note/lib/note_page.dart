@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quick_note/note.dart';
 
 class NotePage extends StatefulWidget {
   NotePage({Key? key}) : super(key: key);
@@ -8,9 +9,10 @@ class NotePage extends StatefulWidget {
 }
 
 class _NotePageState extends State<NotePage> {
-  List notesList = [];
+  List<Note> notesList = [];
 
   TextEditingController controller = TextEditingController();
+  TextEditingController imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +26,26 @@ class _NotePageState extends State<NotePage> {
           child: Column(
             children: [
               TextFormField(
+                controller: imageController,
+                decoration: InputDecoration(
+                  labelText: 'Enter image url',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 8),
+              TextFormField(
                 controller: controller,
                 maxLines: 5,
                 decoration: InputDecoration(
                   labelText: 'Enter text',
                   border: OutlineInputBorder(),
                 ),
+                autovalidateMode: AutovalidateMode.always,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Notes cannot be empty';
+                  }
+                },
               ),
               SizedBox(height: 16),
               ListView.builder(
@@ -43,9 +59,21 @@ class _NotePageState extends State<NotePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              notesList[i],
-                              style: TextStyle(fontSize: 22),
+                            Image.network(
+                              notesList[i].imageUrl,
+                              height: 200,
+                              width: 100,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  notesList[i].note,
+                                  style: TextStyle(fontSize: 22),
+                                ),
+                                SizedBox(height: 8),
+                                Text(notesList[i].date.toString()),
+                              ],
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -69,9 +97,18 @@ class _NotePageState extends State<NotePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            notesList.add(controller.text);
+            if (controller.text.isNotEmpty) {
+              notesList.add(
+                Note(
+                  note: controller.text,
+                  imageUrl: imageController.text,
+                  date: DateTime.now(),
+                ),
+              );
+            }
           });
           controller.clear();
+          imageController.clear();
         },
         child: Icon(Icons.save),
       ),
