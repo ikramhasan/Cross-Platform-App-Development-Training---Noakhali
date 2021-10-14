@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quick_note/note.dart';
+import 'package:quick_note/view_note.dart';
 
 class NotePage extends StatefulWidget {
   NotePage({Key? key}) : super(key: key);
@@ -52,41 +53,25 @@ class _NotePageState extends State<NotePage> {
                 shrinkWrap: true,
                 itemCount: notesList.length,
                 itemBuilder: (_, i) {
-                  return Card(
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.network(
-                              notesList[i].imageUrl,
-                              height: 200,
-                              width: 100,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  notesList[i].note,
-                                  style: TextStyle(fontSize: 22),
-                                ),
-                                SizedBox(height: 8),
-                                Text(notesList[i].date.toString()),
-                              ],
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  notesList.removeAt(i);
-                                });
-                              },
-                              child: Icon(Icons.delete),
-                            ),
-                          ],
-                        ),
-                      ),
+                  return ListTile(
+                    title: Text(
+                      notesList[i].note,
+                      maxLines: 3,
                     ),
+                    subtitle: Text(notesList[i].imageUrl),
+                    leading: Image.network(notesList[i].imageUrl),
+                    trailing: Text(
+                      notesList[i].date.toString().substring(0, 10),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ViewNotePage(
+                            note: notesList[i],
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
