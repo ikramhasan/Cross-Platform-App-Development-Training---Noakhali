@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 class GridPage extends StatefulWidget {
   GridPage({Key? key}) : super(key: key);
@@ -46,6 +47,22 @@ class _GridPageState extends State<GridPage> {
             color: Colors.green,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.black,
+                  content: Text(
+                    'Developed by Ikramul Hasan',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              );
+            },
+            icon: Icon(Icons.info),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -68,7 +85,37 @@ class _GridPageState extends State<GridPage> {
                     borderRadius: BorderRadius.circular(8),
                     onTap: () {
                       setState(() {
-                        exp = exp + list[index];
+                        if (list[index] == 'AC') {
+                          exp = '';
+                        } else if (list[index] == 'DEL') {
+                          exp = exp.substring(0, exp.length - 1);
+                        } else if (list[index] == '=') {
+                          try {
+                            Parser p = Parser();
+                            Expression parsedExp = p.parse(exp);
+                            ContextModel cm = ContextModel();
+                            double eval =
+                                parsedExp.evaluate(EvaluationType.REAL, cm);
+                            exp = eval.toString();
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.black,
+                                content: Text(
+                                  'Invalid math expression. Resetting...',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            );
+                            exp = '';
+                          }
+                        } else if (exp.length != 0 &&
+                            exp[exp.length - 1] == '.' &&
+                            list[index] == '.') {
+                          //
+                        } else {
+                          exp = exp + list[index];
+                        }
                       });
                     },
                     child: Ink(
