@@ -85,37 +85,44 @@ class _GridPageState extends State<GridPage> {
                     borderRadius: BorderRadius.circular(8),
                     onTap: () {
                       setState(() {
-                        if (list[index] == 'AC') {
+                        if (index == 0) {
                           exp = '';
-                        } else if (list[index] == 'DEL') {
+                        } else if (index == 1) {
                           exp = exp.substring(0, exp.length - 1);
-                        } else if (list[index] == '=') {
-                          try {
-                            Parser p = Parser();
-                            Expression parsedExp = p.parse(exp);
-                            ContextModel cm = ContextModel();
-                            double eval =
-                                parsedExp.evaluate(EvaluationType.REAL, cm);
-                            exp = eval.toString();
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.black,
-                                content: Text(
-                                  'Invalid math expression. Resetting...',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            );
-                            exp = '';
-                          }
-                        } else if (exp.length != 0 &&
-                            exp[exp.length - 1] == '.' &&
-                            list[index] == '.') {
-                          //
                         } else {
                           exp = exp + list[index];
                         }
+                        // if (list[index] == 'AC') {
+                        //   exp = '';
+                        // } else if (list[index] == 'DEL') {
+                        //   exp = exp.substring(0, exp.length - 1);
+                        // } else if (list[index] == '=') {
+                        //   try {
+                        //     Parser p = Parser();
+                        //     Expression parsedExp = p.parse(exp);
+                        //     ContextModel cm = ContextModel();
+                        //     double eval =
+                        //         parsedExp.evaluate(EvaluationType.REAL, cm);
+                        //     exp = eval.toString();
+                        //   } catch (e) {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //         backgroundColor: Colors.black,
+                        //         content: Text(
+                        //           'Invalid math expression. Resetting...',
+                        //           style: TextStyle(color: Colors.white),
+                        //         ),
+                        //       ),
+                        //     );
+                        //     exp = '';
+                        //   }
+                        // } else if (exp.length != 0 &&
+                        //     exp[exp.length - 1] == '.' &&
+                        //     list[index] == '.') {
+                        //   //
+                        // } else {
+                        //   exp = exp + list[index];
+                        // }
                       });
                     },
                     child: Ink(
