@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,10 +71,12 @@ class _GridPageState extends State<GridPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                exp,
-                style: GoogleFonts.orbitron(
-                  fontSize: 32,
+              Pulse(
+                child: Text(
+                  exp,
+                  style: GoogleFonts.orbitron(
+                    fontSize: 32,
+                  ),
                 ),
               ),
               Divider(),
@@ -81,60 +84,63 @@ class _GridPageState extends State<GridPage> {
                 shrinkWrap: true,
                 itemCount: list.length,
                 itemBuilder: (context, index) {
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(8),
-                    onTap: () {
-                      setState(() {
-                        if (index == 0) {
-                          exp = '';
-                        } else if (index == 1) {
-                          exp = exp.substring(0, exp.length - 1);
-                        } else {
-                          exp = exp + list[index];
-                        }
-                        // if (list[index] == 'AC') {
-                        //   exp = '';
-                        // } else if (list[index] == 'DEL') {
-                        //   exp = exp.substring(0, exp.length - 1);
-                        // } else if (list[index] == '=') {
-                        //   try {
-                        //     Parser p = Parser();
-                        //     Expression parsedExp = p.parse(exp);
-                        //     ContextModel cm = ContextModel();
-                        //     double eval =
-                        //         parsedExp.evaluate(EvaluationType.REAL, cm);
-                        //     exp = eval.toString();
-                        //   } catch (e) {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         backgroundColor: Colors.black,
-                        //         content: Text(
-                        //           'Invalid math expression. Resetting...',
-                        //           style: TextStyle(color: Colors.white),
-                        //         ),
-                        //       ),
-                        //     );
-                        //     exp = '';
-                        //   }
-                        // } else if (exp.length != 0 &&
-                        //     exp[exp.length - 1] == '.' &&
-                        //     list[index] == '.') {
-                        //   //
-                        // } else {
-                        //   exp = exp + list[index];
-                        // }
-                      });
-                    },
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          list[index].toString(),
-                          style: GoogleFonts.orbitron(
-                            fontSize: 22,
+                  return FadeInLeft(
+                    delay: Duration(milliseconds: index * 100),
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      onTap: () {
+                        setState(() {
+                          // if (index == 0) {
+                          //   exp = '';
+                          // } else if (index == 1) {
+                          //   exp = exp.substring(0, exp.length - 1);
+                          // } else {
+                          //   exp = exp + list[index];
+                          // }
+                          if (list[index] == 'AC') {
+                            exp = '';
+                          } else if (list[index] == 'DEL') {
+                            exp = exp.substring(0, exp.length - 1);
+                          } else if (list[index] == '=') {
+                            try {
+                              Parser p = Parser();
+                              Expression parsedExp = p.parse(exp);
+                              ContextModel cm = ContextModel();
+                              double eval =
+                                  parsedExp.evaluate(EvaluationType.REAL, cm);
+                              exp = eval.toString();
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  backgroundColor: Colors.black,
+                                  content: Text(
+                                    'Invalid math expression. Resetting...',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              );
+                              exp = '';
+                            }
+                          } else if (exp.length != 0 &&
+                              exp[exp.length - 1] == '.' &&
+                              list[index] == '.') {
+                            //
+                          } else {
+                            exp = exp + list[index];
+                          }
+                        });
+                      },
+                      child: Ink(
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Center(
+                          child: Text(
+                            list[index].toString(),
+                            style: GoogleFonts.orbitron(
+                              fontSize: 22,
+                            ),
                           ),
                         ),
                       ),
