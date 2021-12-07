@@ -17,6 +17,7 @@ class Giveaway {
     required this.gamerpowerUrl,
     required this.openGiveaway,
   });
+
   late final int id;
   late final String title;
   late final String worth;
