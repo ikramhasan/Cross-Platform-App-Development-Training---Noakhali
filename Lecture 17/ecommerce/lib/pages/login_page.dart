@@ -1,8 +1,12 @@
+import 'package:ecommerce/pages/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +15,9 @@ class LoginPage extends StatelessWidget {
         padding: EdgeInsets.all(32),
         child: Column(
           children: [
-            Lottie.asset(
-              'assets/ecommerce.json',
-            ),
+            Lottie.asset('assets/ecommerce.json'),
             TextFormField(
+              controller: emailController,
               decoration: InputDecoration(
                 labelText: 'Email',
                 hintText: 'Enter your email address',
@@ -23,6 +26,7 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 32),
             TextFormField(
+              controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
@@ -42,6 +46,17 @@ class LoginPage extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
+            ),
+            SizedBox(height: 8),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => SignupPage(),
+                  ),
+                );
+              },
+              child: Text('Signup'),
             ),
           ],
         ),

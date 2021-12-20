@@ -90,13 +90,6 @@ class _GridPageState extends State<GridPage> {
                       borderRadius: BorderRadius.circular(8),
                       onTap: () {
                         setState(() {
-                          // if (index == 0) {
-                          //   exp = '';
-                          // } else if (index == 1) {
-                          //   exp = exp.substring(0, exp.length - 1);
-                          // } else {
-                          //   exp = exp + list[index];
-                          // }
                           if (list[index] == 'AC') {
                             exp = '';
                           } else if (list[index] == 'DEL') {
