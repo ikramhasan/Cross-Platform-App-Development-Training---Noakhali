@@ -1,4 +1,5 @@
 import 'package:ecommerce/pages/signup_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -39,7 +40,12 @@ class LoginPage extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(double.infinity, 60),
               ),
-              onPressed: () {},
+              onPressed: () {
+                FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: emailController.text,
+                  password: passwordController.text,
+                );
+              },
               child: Text(
                 'Login',
                 style: TextStyle(
